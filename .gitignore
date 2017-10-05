@@ -99,3 +99,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+tourapi/.idea/misc.xml
+tourapi/.idea/modules.xml
+tourapi/.idea/workspace.xml
+tourapi/.idea/tourapi.iml
