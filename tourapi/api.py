@@ -97,11 +97,21 @@ class TourAPI:
         # Get total count
 
         resp = json.loads(urlopen(self.additional_images_url.format(content_id, total_count)).read().decode('utf-8'))
-        data = resp['response']['body']['items']['item']
-        # Extract data list
+        print(resp)
+        try:
+            data = resp['response']['body']['items']['item']
+            # Extract data list
+            for img in data:
+                del img['contentid']
+                del img['serialnum']
+                img['origin'] = img.pop('originimgurl')
+                img['small'] = img.pop('smallimageurl')
 
-        return resp
+            return data
+        except TypeError:
+            return None
 
 if __name__ == '__main__':
     api = TourAPI(AreaCodes.DAEJEON, 'bb%2FPPi9Iy9rNdmIN7PIdb4doQ8PCwL725OFZndZ7DS%2FbP8%2Bzr9T3rpoD%2B083JYDwg5YJyi3HQ3UZ5%2Fp0e6ER8Q%3D%3D')
     print(api.get_tour_list())
+    print(api.get_detail_images(1851001))
