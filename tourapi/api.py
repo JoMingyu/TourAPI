@@ -79,6 +79,29 @@ class TourAPI:
 
         return data
 
+    def get_detail_intro(self, content_id):
+        content_type_id = self.get_detail_common(content_id)['contenttypeid']
+        resp = json.loads(urlopen(self.detail_intro_url.format(content_id, content_type_id)).read().decode('utf-8'))
+        data = resp['response']['body']['items']['item']
+
+        data['infocenter'] = [infocenter.strip() for infocenter in data['infocenter'].split('\n <br /> \n')]
+        del data['contentid']
+        del data['contenttypeid']
+        # Manufacture
+
+        return resp['response']['body']['items']['item']
+
+    def get_detail_images(self, content_id):
+        resp = json.loads(urlopen(self.additional_images_url.format(content_id, 1)).read().decode('utf-8'))
+        total_count = resp['response']['body']['totalCount']
+        # Get total count
+
+        resp = json.loads(urlopen(self.additional_images_url.format(content_id, total_count)).read().decode('utf-8'))
+        data = resp['response']['body']['items']['item']
+        # Extract data list
+
+        return resp
+
 if __name__ == '__main__':
     api = TourAPI(AreaCodes.DAEJEON, 'bb%2FPPi9Iy9rNdmIN7PIdb4doQ8PCwL725OFZndZ7DS%2FbP8%2Bzr9T3rpoD%2B083JYDwg5YJyi3HQ3UZ5%2Fp0e6ER8Q%3D%3D')
     print(api.get_tour_list())
