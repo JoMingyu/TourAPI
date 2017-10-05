@@ -49,3 +49,23 @@ class TourAPI:
         self.detail_common_url = _URLS['detail_common'].format(area_code, service_key, mobile_os, app_name) + '&contentId={0}'
         self.detail_intro_url = _URLS['detail_intro'].format(area_code, service_key, mobile_os, app_name) + '&contentId={0}&contentTypeId={1}'
         self.additional_images_url = _URLS['additional_images'].format(area_code, service_key, mobile_os, app_name) + '&contentId={0}&numOfRows={1}'
+
+    def get_tour_list(self):
+        resp = json.loads(urlopen(self.tour_list_url.format(1)).read().decode('utf-8'))
+        total_count = resp['response']['body']['totalCount']
+        # Get total count
+
+        resp = json.loads(urlopen(self.tour_list_url.format(total_count)).read().decode('utf-8'))
+        data = resp['response']['body']['items']['item']
+        # Extract data list
+
+        for tour in data:
+            tour['createdtime'] = str(tour['createdtime'])[:8]
+            tour['modifiedtime'] = str(tour['modifiedtime'])[:8]
+            # Manufacture
+
+        return data
+
+if __name__ == '__main__':
+    api = TourAPI(AreaCodes.DAEJEON, 'bb%2FPPi9Iy9rNdmIN7PIdb4doQ8PCwL725OFZndZ7DS%2FbP8%2Bzr9T3rpoD%2B083JYDwg5YJyi3HQ3UZ5%2Fp0e6ER8Q%3D%3D')
+    print(api.get_tour_list())
