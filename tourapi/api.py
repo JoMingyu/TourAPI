@@ -51,6 +51,11 @@ class TourAPI:
         self.additional_images_url = _URLS['additional_images'].format(area_code, service_key, mobile_os, app_name) + '&contentId={0}&numOfRows={1}'
 
     def get_tour_list(self):
+        """
+        Inquire all tour list
+
+        :rtype: list
+        """
         resp = json.loads(urlopen(self.tour_list_url.format(1)).read().decode('utf-8'))
         total_count = resp['response']['body']['totalCount']
         # Get total count
@@ -67,6 +72,14 @@ class TourAPI:
         return data
 
     def get_detail_common(self, content_id):
+        """
+        Inquire common detail data
+
+        :param content_id: Content ID to inquire
+        :type content_id: str
+
+        :rtype: dict
+        """
         resp = json.loads(urlopen(self.detail_common_url.format(str(content_id))).read().decode('utf-8'))
         data = resp['response']['body']['items']['item']
         # Extract data list
@@ -80,9 +93,20 @@ class TourAPI:
         return data
 
     def get_detail_intro(self, content_id):
+        """
+        Inquire detail introduction
+
+        :param content_id: Content ID to inquire
+        :type content_id: str
+
+        :rtype: dict
+        """
         content_type_id = self.get_detail_common(content_id)['contenttypeid']
+        # Get content type id
+
         resp = json.loads(urlopen(self.detail_intro_url.format(content_id, content_type_id)).read().decode('utf-8'))
         data = resp['response']['body']['items']['item']
+        # Extract data list
 
         data['infocenter'] = [infocenter.strip() for infocenter in data['infocenter'].split('\n <br /> \n')]
         del data['contentid']
@@ -92,12 +116,19 @@ class TourAPI:
         return resp['response']['body']['items']['item']
 
     def get_detail_images(self, content_id):
+        """
+        Inquire detail images
+
+        :param content_id: Content ID to inquire
+        :type content_id: str
+
+        :rtype: list
+        """
         resp = json.loads(urlopen(self.additional_images_url.format(content_id, 1)).read().decode('utf-8'))
         total_count = resp['response']['body']['totalCount']
         # Get total count
 
         resp = json.loads(urlopen(self.additional_images_url.format(content_id, total_count)).read().decode('utf-8'))
-        print(resp)
         try:
             data = resp['response']['body']['items']['item']
             # Extract data list
@@ -106,6 +137,7 @@ class TourAPI:
                 del img['serialnum']
                 img['origin'] = img.pop('originimgurl')
                 img['small'] = img.pop('smallimageurl')
+                # Manufacture
 
             return data
         except TypeError:
@@ -113,5 +145,3 @@ class TourAPI:
 
 if __name__ == '__main__':
     api = TourAPI(AreaCodes.DAEJEON, 'bb%2FPPi9Iy9rNdmIN7PIdb4doQ8PCwL725OFZndZ7DS%2FbP8%2Bzr9T3rpoD%2B083JYDwg5YJyi3HQ3UZ5%2Fp0e6ER8Q%3D%3D')
-    print(api.get_tour_list())
-    print(api.get_detail_images(1851001))
