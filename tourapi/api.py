@@ -66,6 +66,19 @@ class TourAPI:
 
         return data
 
+    def get_detail_common(self, content_id):
+        resp = json.loads(urlopen(self.detail_common_url.format(str(content_id))).read().decode('utf-8'))
+        data = resp['response']['body']['items']['item']
+        # Extract data list
+
+        data['homepage'] = re.findall('[\w\s]+', data['homepage'])[0]
+        data['createdtime'] = str(data['createdtime'])[:8]
+        data['modifiedtime'] = str(data['modifiedtime'])[:8]
+        del data['contentid']
+        # Manufacture
+
+        return data
+
 if __name__ == '__main__':
     api = TourAPI(AreaCodes.DAEJEON, 'bb%2FPPi9Iy9rNdmIN7PIdb4doQ8PCwL725OFZndZ7DS%2FbP8%2Bzr9T3rpoD%2B083JYDwg5YJyi3HQ3UZ5%2Fp0e6ER8Q%3D%3D')
     print(api.get_tour_list())
