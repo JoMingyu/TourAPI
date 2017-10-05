@@ -11,3 +11,23 @@ _URLS = {
     'detail_intro': _API_ENDPOINT + '/detailIntro?' + _PARAMS,
     'additional_images': _API_ENDPOINT + '/detailImage?imageYN=Y&' + _PARAMS
 }
+
+
+class AreaCodes:
+    SEOUL = 1
+    INCHEON = 2
+    DAEJEON = 3
+    DAEGU = 4
+    GWANGJU = 5
+    BUSAN = 6
+    ULSAN = 7
+    SEJONG = 8
+    GYEONGGI = 31
+    KANGWON = 32
+    CHUNGBUK = 33
+    CHUNGNAM = 34
+    GYUNGBUK = 35
+    GYUNGNAM = 36
+    JEONBUK = 37
+    JEONNAM = 38
+    JEJU = 39
