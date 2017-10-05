@@ -31,3 +31,21 @@ class AreaCodes:
     JEONBUK = 37
     JEONNAM = 38
     JEJU = 39
+
+
+class TourAPI:
+    def __init__(self, area_code, service_key, mobile_os='ETC', app_name='PlanB'):
+        """
+        :param area_code: Area code to initialize API
+        :param service_key: Service code from data.go.kr
+        :param mobile_os: Application os(AND, IOS, ETC)
+        :param app_name: Service name
+        :type area_code: int
+        :type service_key: str
+        :type mobile_os: str
+        :type app_name: str
+        """
+        self.tour_list_url = _URLS['tour_list'].format(area_code, service_key, mobile_os, app_name) + '&numOfRows={0}'
+        self.detail_common_url = _URLS['detail_common'].format(area_code, service_key, mobile_os, app_name) + '&contentId={0}'
+        self.detail_intro_url = _URLS['detail_intro'].format(area_code, service_key, mobile_os, app_name) + '&contentId={0}&contentTypeId={1}'
+        self.additional_images_url = _URLS['additional_images'].format(area_code, service_key, mobile_os, app_name) + '&contentId={0}&numOfRows={1}'
