@@ -156,6 +156,7 @@ class TourAPI:
         del data['contenttypeid']
 
         if content_type_id == 12:
+            # 관광지
             keychain = {
                 'accomcount': ('capacity', None),
                 'chkbabycarriage': ('baby_carriage', None),
@@ -176,6 +177,7 @@ class TourAPI:
             data['natural_heritage'] = data.pop('heritage2') == 1 if 'heritage2' in data else None
             data['archival_heritage'] = data.pop('heritage3') == 1 if 'heritage3' in data else None
         elif content_type_id == 14:
+            # 문화시설
             keychain = {
                 'accomcountculture': ('capacity', None),
                 'chkbabycarriageculture': ('baby_carriage', None),
@@ -195,6 +197,7 @@ class TourAPI:
             }
             _dict_key_changer(data, keychain)
         elif content_type_id == 15:
+            # 축제/공연/행사
             keychain = {
                 'agelimit': ('age_limit', None),
                 'bookingplace': ('reservation_place', None),
@@ -213,6 +216,7 @@ class TourAPI:
 
             data.pop('eventhomepage') if 'eventhomepage' in data else None
         elif content_type_id == 25:
+            # 여행코스
             keychain = {
                 'distance': ('distance', None),
                 'infocentertourcourse': ('info_center', None),
@@ -222,6 +226,7 @@ class TourAPI:
             }
             _dict_key_changer(data, keychain)
         elif content_type_id == 28:
+            # 레포츠
             keychain = {
                 'accomcountleports': ('capacity', None),
                 'chkbabycarriageleports': ('baby_carriage', None),
@@ -240,6 +245,7 @@ class TourAPI:
             }
             _dict_key_changer(data, keychain)
         elif content_type_id == 32:
+            # 숙박
             keychain = {
                 'accomcountlodging': ('capacity', None),
                 'checkintime': ('checkin_time', None),
@@ -272,11 +278,13 @@ class TourAPI:
             data['seminar'] = data.pop('seminar') == 1 if 'seminar' in data else False
             data['sports'] = data.pop('sports') == 1 if 'sports' in data else False
         elif content_type_id == 38:
+            # 쇼핑
             keychain = {
                 'chkbabycarriageshopping': ('baby_carriage', None),
                 'chkcreditcardshopping': ('credit_card', None),
                 'chkpetshopping': ('pet', None),
                 'fairday': ('fair_day', None),
+                'infocentershopping': ('info_center', None),
                 'opendateshopping': ('open_date', None),
                 'opentime': ('open_time', None),
                 'parkingshopping': ('parking', None),
@@ -289,6 +297,7 @@ class TourAPI:
             }
             _dict_key_changer(data, keychain)
         elif content_type_id == 39:
+            # 음식
             keychain = {
                 'chkcreditcardfood': ('credit_card', None),
                 'discountinfofodd': ('discount_info', None),
@@ -342,6 +351,7 @@ class TourAPI:
 
 if __name__ == '__main__':
     api = TourAPI(AreaCodes.DAEJEON, 'bb%2FPPi9Iy9rNdmIN7PIdb4doQ8PCwL725OFZndZ7DS%2FbP8%2Bzr9T3rpoD%2B083JYDwg5YJyi3HQ3UZ5%2Fp0e6ER8Q%3D%3D')
+    print(api.get_tour_list())
     for tour in api.get_tour_list():
         print(api.get_detail_common(tour['content_id']))
         print(api.get_detail_intro(tour['content_id']))

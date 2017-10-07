@@ -38,19 +38,27 @@ api = TourAPI(area_code=AreaCodes.DAEJEON, service_key='bb%2FPPi9Iy...', mobile_
 ~~~
 print(api.get_tour_list())
 ~~~
-[{'addr1': '대전광역시 유성구 신성로84번길 49', 'addr2': '(신성동)', 'areacode': 3, 'cat1': 'A05', 'cat2': 'A0502', 'cat3': 'A05020100', 'contentid': 1928589, 'contenttypeid': 39, 'createdtime': '20140627', 'mapx': 127.3512699993, 'mapy': 36.3890411631, 'mlevel': 6, 'modifiedtime': '20161205', 'readcount': 3088, 'sigungucode': 4, 'tel': '042-862-9288', 'title': '가나샤브샤브', 'zipcode': 34116},  
-{'addr1': '대전광역시 유성구 대덕대로 588', 'addr2': '(도룡동)', 'areacode': 3, 'cat1': 'A05', 'cat2': 'A0502', 'cat3': 'A05020500', 'contentid': 250577, 'contenttypeid': 39, 'createdtime': '20071023', 'mapx': 127.3788787365, 'mapy': 36.3854587295, 'mlevel': 4, 'modifiedtime': '20160831', 'readcount': 31802, 'sigungucode': 4, 'tel': '042-861-7557', 'title': '가남지', 'zipcode': 34121}, ...]
+[{'content_id': 1939307, 'content_type_id': 39, 'title': '김삿갓', 'address': '대전광역시 유성구 신성로 139', 'zipcode': 34109, 'municipality': 4, 'x': '127.3528002580', 'y': 36.3949238503, 'main_category': 'A05', 'middle_category': 'A0502', 'small_category': 'A05020100', 'views': 3962, 'tel': '042-863-6076~7', 'img_big_url': None, 'img_small_url': None, 'creation_date': '20140805', 'modified_date': '20170215'}, {'content_id': 1126556, 'content_type_id': 12, 'title': '김정선생묘소일원', 'address': '대전광역시 동구 회남로 117', 'zipcode': 34501, 'municipality': 2, 'x': 127.4994798085, 'y': 36.3580751206, 'main_category': 'A02', 'middle_category': 'A0201', 'small_category': 'A02010700', 'views': 34090, 'tel': None, 'img_big_url': 'http://tong.visitkorea.or.kr/cms/resource/32/1585532_image2_1.jpg', 'img_small_url': 'http://tong.visitkorea.or.kr/cms/resource/32/1585532_image3_1.jpg', 'creation_date': '20101111', 'modified_date': '20160302'}, ...]
 
 #### get_detail_common(content_id)
 모든 여행지 종류가 공통적으로 가지고 있는 세부 정보를 조회합니다.
 ~~~
 print(api.get_detail_common(1928589))
 ~~~
-{'contenttypeid': 39, 'createdtime': '20140627', 'modifiedtime': '20161205', 'overview': '[대전광역시 유성구 신성동에 있는 샤브샤브 전문점 가나샤브샤브] 샤브샤브 전문 음식점 가나샤브샤브의 한우암소 생등심 샤브샤브는 무, 양파, 다시마 등 10여 가지 재료를 끓여 낸 육수를 이용해 신선한 야채와 버섯, 우리 밀을 밀어 직접 뽑아낸 국수의 맛이 일품이다. 담백하고 깔끔한 맛의 영양죽도 가나샤브샤브의 특미 중 하나이다.', 'tel': '042-862-9288', 'telname': '가나샤브샤브', 'title': '가나샤브샤브'}
+{'content_type_id': 38, 'overview': '대전광역시 중구에 위치한 갤러리아백화점 동백점은 2000년 7월에 처음 오픈했다. 고급 백화점으로 그 브랜드 이미지를 확고히 하고 있을 뿐 아니라 국내외 유명 브랜드와 패션 잡화, 생활용품에 이르기까지 다양한 품목을 갖추고 있다. <br>', 'tel': '042-480-5000', 'tel_owner': '갤러리아 백화점 (타임월드점)', 'in_book': 0, 'homepage': 'http://branch.galleria.co.kr'}
 
 #### get_detail_intro(content_id)
 여행지의 세부 정보를 조회합니다. 여행지 type마다 리턴이 다릅니다.
 ~~~
 print(api.get_detail_intro(1928589))
 ~~~
-{'chkcreditcardfood': '가능', 'firstmenu': '한우암소고기, 생등심 샤브샤브', 'infocenterfood': '042-862-9288', 'kidsfacility': 0, 'opentimefood': '점심 11:30 ~ 14:30 저녁 17:30 ~ 21:00 * 매주 일요일은 저녁만 운영', 'parkingfood': '가게 인근 주차', 'reservationfood': '전화 예약 가능 (042-862-9288)', 'restdatefood': '토요일', 'smoking': '모두 금연석', 'treatmenu': '샤브샤브 / 한우탕 / 한우수육 / 한우암소구이'}
+{'baby_carriage': '없음', 'credit_card': '가능', 'pet': '불가', 'fair_day': None, 'info_center': '042-480-5000', 'open_date': '2000년 7월 7일 전관 리뉴얼(Renewal)을 거쳐 갤러리아 백화점 동백점으로 그랜드 오픈', 'open_time': '10:30 ~ 20:00', 'parking': '주차가능', 'rest_date': '영업계획에 의해 휴무', 'restroom_info': '화장실완비', 'sale_item': '종합', 'sale_item_cost': '', 'scale': '매장면적 145,345㎡ (4,642평)', 'guide': ''}
+
+#### get_detail_images(content_id)
+여행지의 추가 이미지를 조회합니다.
+~~~
+print(api.get_detail_images(1928589))
+~~~
+[{'origin': 'http://tong.visitkorea.or.kr/cms/resource/95/1023895_image2_1.jpg', 'small': 'http://tong.visitkorea.or.kr/cms/resource/95/1023895_image3_1.jpg'},  
+{'origin': 'http://tong.visitkorea.or.kr/cms/resource/97/1023897_image2_1.jpg', 'small': 'http://tong.visitkorea.or.kr/cms/resource/97/1023897_image3_1.jpg'},  
+{'origin': 'http://tong.visitkorea.or.kr/cms/resource/98/1023898_image2_1.jpg', 'small': 'http://tong.visitkorea.or.kr/cms/resource/98/1023898_image3_1.jpg'}]
