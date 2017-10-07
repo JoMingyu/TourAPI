@@ -1,7 +1,24 @@
 # TourAPI
 한국관광공사의 공공데이터 사업인 TourAPI의 사용성을 개선하기 위한 라이브러리입니다.
 
-현재 TourAPI는 문서에 명시되어 있더라도 데이터가 아예 오지 않거나, 웹 태그들(br 등)이 조잡하게 붙어있는 등의 문제가 많습니다. version 1.0이 릴리즈되는 시점에 라이브러리 단에서 모두 해결토록 하겠습니다.
+## 공공데이터를 직접 사용하며 겪었던 TourAPI의 문제
+1. 문서에 명시되어 있더라도, 데이터가 없으면 반환되는 JSON 데이터에 key조차 오지 않는 경우  
+ex) 어떤 여행지에서는 'infocenter'라는 key로 전화번호가 오는데, 또 다른 여행지에서는 'infocenter'라는 key 자체가 없음.  
+
+2. JSON 데이터의 key 네이밍이 조잡함  
+ex) 시군구코드 : sigungucode, 문화재 여부 : heritage1/2/3  
+ex) 주최자 : sponsor1, 주관자 : sponsor2  
+ex) 한옥 여부 : hanok
+
+3. JSON 데이터의 key 네이밍에 일관성이 없음  
+ex1) '관광지' 타입에서의 유모차 대여 여부 :  chkbabycarriage  
+ex1) '문화시설' 타입에서의 유모차 대여 여부 : chkbabycarriage**culture**  
+ex1) '쇼핑' 타입에서의 유모차 대여 여부 : chkbabycarriage**shopping**  
+ex2) '문화시설' 타입에서의 관람 소요 시간 : spendtime  
+ex2) '축제/공연/행사' 타입에서의 소요 시간 : spendtime**festival**
+
+4. 뭔가 이상한데?  
+'축제/공연/행사' 타입의 이용요금 : use**time**festival
 
 ## How to use
 TourAPI 서비스 키가 필요합니다. 공공데이터포털에서 '국문 관광정보 서비스'에 개발계정을 신청한 후 서비스 키를 확보하시기 바랍니다.
