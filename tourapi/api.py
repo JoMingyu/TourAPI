@@ -157,18 +157,18 @@ class TourAPI:
 
         if content_type_id == 12:
             keychain = {
+                'accomcount': ('capacity', None),
                 'chkbabycarriage': ('baby_carriage', None),
                 'chkcreditcard': ('credit_card', None),
                 'chkpet': ('pet', None),
-                'opendate': ('open_date', None),
-                'restdate': ('rest_date', None),
-                'usetime': ('use_time', None),
-                'accomcount': ('capacity', None),
+                'expagerange': ('age_range', None),
                 'expguide': ('guide', None),
                 'infocenter': ('info_center', None),
+                'opendate': ('open_date', None),
                 'parking': ('parking', None),
-                'expagerange': ('age_range', None),
-                'useseason': ('season', None)
+                'restdate': ('rest_date', None),
+                'useseason': ('season', None),
+                'usetime': ('use_time', None)
             }
             _dict_key_changer(data, keychain)
 
@@ -176,75 +176,89 @@ class TourAPI:
             data['natural_heritage'] = data.pop('heritage2') == 1 if 'heritage2' in data else None
             data['archival_heritage'] = data.pop('heritage3') == 1 if 'heritage3' in data else None
         elif content_type_id == 14:
-            data['baby_carriage'] = data.pop('chkbabycarriageculture') if 'chkbabycarriageculture' in data else None
-            data['credit_card'] = data.pop('chkcreditcardculture') if 'chkcreditcardculture' in data else None
-            data['pet'] = data.pop('chkpetculture') if 'chkpetculture' in data else None
-            data['rest_date'] = data.pop('restdateculture') if 'restdateculture' in data else None
-            data['use_time'] = data.pop('usetimeculture') if 'usetimeculture' in data else None
-            # 이용시간
-            data['spend_time'] = data.pop('spendtime') if 'spendtime' in data else None
-            # 관람 소요시간
-            data['parking'] = data.pop('parkingculture') if 'parkingculture' in data else None
-            data['parking_fee'] = data.pop('parkingfee') if 'parkingfee' in data else None
-            data['use_fee'] = data.pop('usefee') if 'usefee' in data else None
-            data['capacity'] = data.pop('accomcount') if 'accomcount' in data else None
-            data['discount'] = data.pop('discount') if 'discount' in data else None
-            data['scale'] = data.pop('scale') if 'scale' in data else None
-            data['info_center'] = data.pop('infocenterculture') if 'infocenterculture' in data else None
+            keychain = {
+                'accomcountculture': ('capacity', None),
+                'chkbabycarriageculture': ('baby_carriage', None),
+                'chkcreditcardculture': ('credit_card', None),
+                'chkpetculture': ('pet', None),
+                'discountinfo': ('discount_info', None),
+                'infocenterculture': ('info_center', None),
+                'parkingculture': ('parking', None),
+                'parkingfee': ('parking_fee', None),
+                'restdateculture': ('rest_date', None),
+                'usefee': ('use_fee', None),
+                'usetimeculture': ('use_time', None),
+                # 이용시간
+                'scale': ('scale', None),
+                'spendtime': ('spend_time', None)
+                # 관람 소요시간
+            }
+            _dict_key_changer(data, keychain)
         elif content_type_id == 15:
-            data['age_limit'] = data.pop('agelimit') if 'agelimit' in data else None
-            data['reservation_place'] = data.pop('bookingplace') if 'bookingplace' in data else None
-            data['start_date'] = data.pop('eventstartdate') if 'eventstartdate' in data else None
-            data['end_date'] = data.pop('eventenddate') if 'eventenddate' in data else None
-            data['place'] = data.pop('eventplace') if 'eventplace' in data else None
-            data['place_guide'] = data.pop('placeinfo') if 'placeinfo' in data else None
-            data['festival_grade'] = data.pop('festivalgrade') if 'festivalgrade' in data else None
-            data['spend_time'] = data.pop('spendtimefestival') if 'spendtimefestival' in data else None
-            data['organizer'] = data.pop('sponsor1') if 'sponsor1' in data else None
-            # 주최자
-            data['host'] = data.pop('sponsor2') if 'sponsor2' in data else None
-            # 주관자
-            data['sub_event'] = data.pop('subevent') if 'subevent' in data else None
-            data['use_fee'] = data.pop('usetimefestival') if 'usetimefestival' in data else None
+            keychain = {
+                'agelimit': ('age_limit', None),
+                'bookingplace': ('reservation_place', None),
+                'eventstartdate': ('start_date', None),
+                'eventenddate': ('end_date', None),
+                'eventplace': ('place', None),
+                'festivalgrade': ('festival_grade', None),
+                'placeinfo': ('place_guide', None),
+                'spendtimefestival': ('spend_time', None),
+                'sponsor1': ('organizer', None),
+                'sponsor2': ('host', None),
+                'subevent': ('sub_event', None),
+                'usetimefestival': ('use_fee', None)
+            }
+            _dict_key_changer(data, keychain)
 
-            del data['eventhomepage']
+            data.pop('eventhomepage') if 'eventhomepage' in data else None
         elif content_type_id == 25:
-            data['distance'] = data.pop('distance') if 'distance' in data else None
-            data['info_center'] = data.pop('infocentertourcourse') if 'infocentertourcourse' in data else None
-            data['schedule'] = data.pop('schedule') if 'schedule' in data else None
-            data['spend_time'] = data.pop('taketime') if 'taketime' in data else None
-            data['theme'] = data.pop('theme') if 'theme' in data else None
+            keychain = {
+                'distance': ('distance', None),
+                'infocentertourcourse': ('info_center', None),
+                'schedule': ('schedule', None),
+                'taketime': ('spend_time', None),
+                'theme': ('theme', None)
+            }
+            _dict_key_changer(data, keychain)
         elif content_type_id == 28:
-            data['baby_carriage'] = data.pop('chkbabycarriageleports') if 'chkbabycarriageleports' in data else None
-            data['credit_card'] = data.pop('chkcreditcardleports') if 'chkcreditcardleports' in data else None
-            data['pet'] = data.pop('chkpetleports') if 'chkpetleports' in data else None
-            data['capacity'] = data.pop('accomcountleports') if 'accomcountleports' in data else None
-            data['age_range'] = data.pop('expagerangeleports') if 'expagerangeleports' in data else None
-            data['info_center'] = data.pop('infocenterleports') if 'infocenterleports' in data else None
-            data['open_period'] = data.pop('openperiod') if 'openperiod' in data else None
-            data['parking'] = data.pop('parkingleports') if 'parkingleports' in data else None
-            data['parking_fee'] = data.pop('parkingfeeleports') if 'parkingfeeleports' in data else None
-            data['reservation_info'] = data.pop('reservation') if 'reservation' in data else None
-            data['rest_date'] = data.pop('restdateleports') if 'restdateleports' in data else None
-            data['scale'] = data.pop('scaleleports') if 'scaleleports' in data else None
-            data['use_time'] = data.pop('usetimeleports') if 'usetimeleports' in data else None
-            data['use_fee'] = data.pop('use_fee') if 'use_fee' in data else None
+            keychain = {
+                'accomcountleports': ('capacity', None),
+                'chkbabycarriageleports': ('baby_carriage', None),
+                'chkcreditcardleports': ('credit_card', None),
+                'chkpetleports': ('pet', None),
+                'expagerangeleports': ('age_range', None),
+                'infocenterleports': ('info_center', None),
+                'openperiod': ('open_period', None),
+                'parkingleports': ('parking', None),
+                'parkingfeeleports': ('parking_fee', None),
+                'reservation': ('reservation_info', None),
+                'restdateleports': ('rest_date', None),
+                'scaleleports': ('scale', None),
+                'usetimeleports': ('use_time', None),
+                'usefeeleports': ('use_fee', None),
+            }
+            _dict_key_changer(data, keychain)
         elif content_type_id == 32:
-            data['capacity'] = data.pop('accomcountlodging') if 'accomcountlodging' in data else None
-            data['checkin_time'] = data.pop('checkintime') if 'checkintime' in data else None
-            data['checkout_time'] = data.pop('checkouttime') if 'checkouttime' in data else None
+            keychain = {
+                'accomcountlodging': ('capacity', None),
+                'checkintime': ('checkin_time', None),
+                'checkouttime': ('checkout_time', None),
+                'foodplace': ('food_field', None),
+                'infocenterlodging': ('info_center', None),
+                'parkinglodging': ('parking', None),
+                'pickup': ('pickup_service', None),
+                'reservationlodging': ('reservation_info', None),
+                'roomtype': ('room_type', None),
+                'scalelodging': ('scale', None),
+                'subfacility': ('sub_facility', None)
+            }
+            _dict_key_changer(data, keychain)
+
             data['benikia'] = data.pop('benikia') == 1 if 'benikia' in data else False
-            data['cooking'] = data.pop('cooking') == 1if 'chkcooking' in data else False
-            data['food_field'] = data.pop('foodplace') if 'foodplace' in data else None
+            data['cooking'] = data.pop('chkcooking') == 1 if 'chkcooking' in data else False
             data['goodstay'] = data.pop('goodstay') == 1 if 'goodstay' in data else False
             data['korean_house'] = data.pop('hanok') == 1 if 'hanok' in data else False
-            data['info_center'] = data.pop('info_center') if 'infocenterlodging' in data else None
-            data['parking'] = data.pop('parkinglodging') if 'parkinglodging' in data else None
-            data['pickup_service'] = data.pop('pickup') if 'pickup' in data else None
-            data['reservation_info'] = data.pop('reservationlodging') if 'reservationlodging' in data else None
-            data['room_type'] = data.pop('roomtype') if 'roomtype' in data else None
-            data['scale'] = data.pop('scalelodging') if 'scalelodging' in data else None
-            data['sub_facility'] = data.pop('subfacility') if 'subfacility' in data else None
             data['barbecue'] = data.pop('barbecue') == 1 if 'barbecue' in data else False
             data['beauty'] = data.pop('beauty') == 1 if 'beauty' in data else False
             data['beverage'] = data.pop('beverage') == 1 if 'beverage' in data else False
@@ -252,20 +266,49 @@ class TourAPI:
             data['campfire'] = data.pop('campfire') == 1 if 'campfire' in data else False
             data['fitness'] = data.pop('fitness') == 1 if 'fitness' in data else False
             data['karaoke'] = data.pop('karaoke') == 1 if 'karaoke' in data else False
-            data['public_bath'] = data.pop('publicpath') == 1 if 'publicbath' in data else False
-            data['public_path'] = data.pop('publicpc') == 1 if 'publicpc' in data else False
+            data['public_bath'] = data.pop('publicbath') == 1 if 'publicbath' in data else False
+            data['public_pc'] = data.pop('publicpc') == 1 if 'publicpc' in data else False
             data['sauna'] = data.pop('sauna') == 1 if 'sauna' in data else False
             data['seminar'] = data.pop('seminar') == 1 if 'seminar' in data else False
             data['sports'] = data.pop('sports') == 1 if 'sports' in data else False
         elif content_type_id == 38:
-            data['baby_carriage'] = data.pop('chkbabycarriageshopping') if 'chkbabycarriageshopping' in data else None
-            data['credit_card'] = data.pop('chkcreditcardshopping') if 'chkcreditcardshopping' in data else None
-            data['pet'] = data.pop('chkpetshopping') if 'chkpetshopping' in data else None
-            data['fair_day'] = data.pop('fairday') if 'fairday' in data else None
-            data['open_date'] = data.pop('opendateshopping') if 'opendateshopping' in data else None
-            data['open_time']
+            keychain = {
+                'chkbabycarriageshopping': ('baby_carriage', None),
+                'chkcreditcardshopping': ('credit_card', None),
+                'chkpetshopping': ('pet', None),
+                'fairday': ('fair_day', None),
+                'opendateshopping': ('open_date', None),
+                'opentime': ('open_time', None),
+                'parkingshopping': ('parking', None),
+                'restdateshopping': ('rest_date', None),
+                'restroom': ('restroom_info', None),
+                'saleitem': ('sale_item', None),
+                'saleitemcost': ('sale_item_cost', None),
+                'scaleshopping': ('scale', None),
+                'shopguide': ('guide', None)
+            }
+            _dict_key_changer(data, keychain)
         elif content_type_id == 39:
-            pass
+            keychain = {
+                'chkcreditcardfood': ('credit_card', None),
+                'discountinfofodd': ('discount_info', None),
+                'firstmenu': ('rep_menu', None),
+                'infocenterfood': ('info_center', None),
+                'kidsfacility': ('kids_facility', None),
+                'opendatefood': ('open_date', None),
+                'opentimefood': ('open_time', None),
+                'packing': ('packing', None),
+                'parkingfood': ('parking', None),
+                'reservationfood': ('reservation_info', None),
+                'restdatefood': ('rest_date', None),
+                'scalefood': ('scale', None),
+                'seat': ('seat', None),
+                'smoking': ('smoking', None),
+                'treatmenu': ('treat_menus', None)
+            }
+            _dict_key_changer(data, keychain)
+
+            data['kids_facility'] = data.pop('kidsfacility') == 1 if 'kidsfacility' in data else False
 
         return data
 
@@ -299,7 +342,7 @@ class TourAPI:
 
 if __name__ == '__main__':
     api = TourAPI(AreaCodes.DAEJEON, 'bb%2FPPi9Iy9rNdmIN7PIdb4doQ8PCwL725OFZndZ7DS%2FbP8%2Bzr9T3rpoD%2B083JYDwg5YJyi3HQ3UZ5%2Fp0e6ER8Q%3D%3D')
-    # print(api.get_detail_intro(1928589))
     for tour in api.get_tour_list():
-        if tour['content_type_id'] == 12:
-            print(api.get_detail_intro(tour['content_id']))
+        print(api.get_detail_common(tour['content_id']))
+        print(api.get_detail_intro(tour['content_id']))
+        print(api.get_detail_images(tour['content_id']))
