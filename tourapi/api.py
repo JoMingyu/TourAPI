@@ -65,8 +65,22 @@ class TourAPI:
         # Extract data list
 
         for tour in data:
-            tour['createdtime'] = str(tour['createdtime'])[:8]
-            tour['modifiedtime'] = str(tour['modifiedtime'])[:8]
+            tour['title'] = tour['title'] if 'title' in tour else None
+            tour['cat3'] = tour['cat3'] if 'cat3' in tour else None
+            tour['address'] = tour.pop('addr1') if 'addr1' in tour else None
+            tour['x'] = tour.pop('mapx') if 'mapx' in tour else None
+            tour['y'] = tour.pop('mapy') if 'mapy' in tour else None
+            tour['readcount'] = tour['readcount'] if 'readcount' in tour else 0
+            tour['municipality'] = tour.pop('sigungucode') if 'sigungucode' in tour else None
+            tour['tel'] = tour['tel'] if 'tel' in tour else None
+            tour['createdtime'] = str(tour['createdtime'])[:8] if 'createdtime' in tour else None
+            tour['modifiedtime'] = str(tour['modifiedtime'])[:8] if 'modifiedtime' in tour else None
+            tour['bigimgurl'] = tour.pop('firstimage') if 'firstimage' in tour else None
+            tour['smallimgurl'] = tour.pop('firstimage2') if 'firstimage2' in tour else None
+
+            del tour['areacode']
+            tour.pop('addr2') if 'addr2' in tour else None
+            tour.pop('mlevel') if 'mlevel' in tour else None
             # Manufacture
 
         return data
@@ -82,14 +96,19 @@ class TourAPI:
         """
         resp = json.loads(urlopen(self.detail_common_url.format(str(content_id))).read().decode('utf-8'))
         data = resp['response']['body']['items']['item']
-        # Extract data list
+        # Extract data
 
-        if 'homepage' in data:
-            data['homepage'] = re.findall('[\w\s]+', data['homepage'])[0]
+        data['homepage'] = re.findall('http\w?://[\w|.]+', data['homepage'])[0] if 'homepage' in data else None
+        data['overview'] = data['overview'] if 'overview' in data else None
+        data['createdtime'] = str(data['createdtime'])[:8] if 'createdtime' in data else None
+        data['modifiedtime'] = str(data['modifiedtime'])[:8] if 'modifiedtime' in data else None
+        data['tel'] = data['tel'] if 'tel' in data else None
+        data['telname'] = data['telname'] if 'telname' in data else None
+        data['booktour'] = data['booktour'] if 'booktour' in data else 0
 
-        data['createdtime'] = str(data['createdtime'])[:8]
-        data['modifiedtime'] = str(data['modifiedtime'])[:8]
+        del data['contenttypeid']
         del data['contentid']
+        del data['title']
         # Manufacture
 
         return data
@@ -108,7 +127,7 @@ class TourAPI:
 
         resp = json.loads(urlopen(self.detail_intro_url.format(content_id, content_type_id)).read().decode('utf-8'))
         data = resp['response']['body']['items']['item']
-        # Extract data list
+        # Extract data
 
         if 'infocenter' in data:
             data['infocenter'] = [infocenter.strip() for infocenter in data['infocenter'].split('\n <br /> \n')]
@@ -149,6 +168,6 @@ class TourAPI:
 
 if __name__ == '__main__':
     api = TourAPI(AreaCodes.DAEJEON, 'bb%2FPPi9Iy9rNdmIN7PIdb4doQ8PCwL725OFZndZ7DS%2FbP8%2Bzr9T3rpoD%2B083JYDwg5YJyi3HQ3UZ5%2Fp0e6ER8Q%3D%3D')
-    print(api.get_tour_list())
-    print(api.get_detail_common(1928589))
-    print(api.get_detail_intro(1928589))
+    for tour in api.get_tour_list():
+        print(api.get_detail_common(tour['contentid']))
+    # print(api.get_detail_intro(1928589))
