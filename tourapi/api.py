@@ -84,7 +84,9 @@ class TourAPI:
         data = resp['response']['body']['items']['item']
         # Extract data list
 
-        data['homepage'] = re.findall('[\w\s]+', data['homepage'])[0]
+        if 'homepage' in data:
+            data['homepage'] = re.findall('[\w\s]+', data['homepage'])[0]
+
         data['createdtime'] = str(data['createdtime'])[:8]
         data['modifiedtime'] = str(data['modifiedtime'])[:8]
         del data['contentid']
@@ -108,7 +110,9 @@ class TourAPI:
         data = resp['response']['body']['items']['item']
         # Extract data list
 
-        data['infocenter'] = [infocenter.strip() for infocenter in data['infocenter'].split('\n <br /> \n')]
+        if 'infocenter' in data:
+            data['infocenter'] = [infocenter.strip() for infocenter in data['infocenter'].split('\n <br /> \n')]
+
         del data['contentid']
         del data['contenttypeid']
         # Manufacture
@@ -145,3 +149,6 @@ class TourAPI:
 
 if __name__ == '__main__':
     api = TourAPI(AreaCodes.DAEJEON, 'bb%2FPPi9Iy9rNdmIN7PIdb4doQ8PCwL725OFZndZ7DS%2FbP8%2Bzr9T3rpoD%2B083JYDwg5YJyi3HQ3UZ5%2Fp0e6ER8Q%3D%3D')
+    print(api.get_tour_list())
+    print(api.get_detail_common(1928589))
+    print(api.get_detail_intro(1928589))
