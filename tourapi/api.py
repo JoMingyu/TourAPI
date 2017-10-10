@@ -286,7 +286,7 @@ class TourAPI:
                 'fairday': ('fair_day', None),
                 'infocentershopping': ('info_center', None),
                 'opendateshopping': ('open_date', None),
-                'opentime': ('open_time', None),
+                'opentime': ('use_time', None),
                 'parkingshopping': ('parking', None),
                 'restdateshopping': ('rest_date', None),
                 'restroom': ('restroom_info', None),
