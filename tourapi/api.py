@@ -87,8 +87,7 @@ class TourAPI:
             'cat3': ('small_category', None),
             'readcount': ('views', 0),
             'tel': ('tel', None),
-            'firstimage': ('img_big_url', None),
-            'firstimage2': ('img_small_url', None)
+            'firstimage': ('image', None),
         }
 
         for tour in data:
