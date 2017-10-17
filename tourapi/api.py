@@ -125,7 +125,10 @@ class TourAPI:
         }
         _dict_key_changer(data, keychain)
 
-        data['homepage'] = re.findall('http\w?://[\w|.]+', data.pop('homepage'))[0] if 'homepage' in data else None
+        try:
+            data['homepage'] = re.findall('http\w?://[\w|.]+', data.pop('homepage'))[0] if 'homepage' in data else None
+        except IndexError:
+            data['homepage'] = None
 
         data.pop('contentid') if 'contentid' in data else None
         data.pop('title') if 'title' in data else None
