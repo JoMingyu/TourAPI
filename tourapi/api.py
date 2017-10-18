@@ -38,8 +38,7 @@ def _dict_key_changer(_dict, keychains):
     for k, v in keychains.items():
         # k - 바꿔야 할 legacy key
         # v - (바꿀 key, default 값)
-        _dict[v[0]] = _dict.pop(k) if k in _dict else v[1]
-        # legacy key가 딕셔너리에 있으면 pop, 없으면 default 값
+        _dict[v[0]] = _dict.pop(k, v[1])
 
 
 class TourAPI:
@@ -93,12 +92,12 @@ class TourAPI:
         for tour in data:
             _dict_key_changer(tour, keychain)
 
-            tour['creation_date'] = str(tour.pop('createdtime'))[:8] if 'createdtime' in tour else None
-            tour['modified_date'] = str(tour.pop('modifiedtime'))[:8] if 'modifiedtime' in tour else None
+            tour['creation_date'] = str(tour.pop('createdtime'), None)[:8]
+            tour['modified_date'] = str(tour.pop('modifiedtime'), None)[:8]
 
-            tour.pop('areacode') if 'areacode' in tour else None
-            tour.pop('addr2') if 'addr2' in tour else None
-            tour.pop('mlevel') if 'mlevel' in tour else None
+            tour.pop('areacode', None)
+            tour.pop('addr2', None)
+            tour.pop('mlevel', None)
             # Manufacture
 
         return data
@@ -130,10 +129,10 @@ class TourAPI:
         except IndexError:
             data['homepage'] = None
 
-        data.pop('contentid') if 'contentid' in data else None
-        data.pop('title') if 'title' in data else None
-        data.pop('createdtime') if 'createdtime' in data else None
-        data.pop('modifiedtime') if 'modifiedtime' in data else None
+        data.pop('contentid', None)
+        data.pop('title', None)
+        data.pop('createdtime', None)
+        data.pop('modifiedtime', None)
         # Manufacture
 
         return data
@@ -175,9 +174,9 @@ class TourAPI:
             }
             _dict_key_changer(data, keychain)
 
-            data['cultural_heritage'] = data.pop('heritage1') == 1 if 'heritage1' in data else None
-            data['natural_heritage'] = data.pop('heritage2') == 1 if 'heritage2' in data else None
-            data['archival_heritage'] = data.pop('heritage3') == 1 if 'heritage3' in data else None
+            data['cultural_heritage'] = data.pop('heritage1', None) == 1
+            data['natural_heritage'] = data.pop('heritage2', None) == 1
+            data['archival_heritage'] = data.pop('heritage3', None) == 1
         elif content_type_id == 14:
             # 문화시설
             keychain = {
@@ -216,7 +215,7 @@ class TourAPI:
             }
             _dict_key_changer(data, keychain)
 
-            data.pop('eventhomepage') if 'eventhomepage' in data else None
+            data.pop('eventhomepage', None)
         elif content_type_id == 25:
             # 여행코스
             keychain = {
@@ -263,22 +262,22 @@ class TourAPI:
             }
             _dict_key_changer(data, keychain)
 
-            data['benikia'] = data.pop('benikia') == 1 if 'benikia' in data else False
-            data['cooking'] = data.pop('chkcooking') == 1 if 'chkcooking' in data else False
-            data['goodstay'] = data.pop('goodstay') == 1 if 'goodstay' in data else False
-            data['korean_house'] = data.pop('hanok') == 1 if 'hanok' in data else False
-            data['barbecue'] = data.pop('barbecue') == 1 if 'barbecue' in data else False
-            data['beauty'] = data.pop('beauty') == 1 if 'beauty' in data else False
-            data['beverage'] = data.pop('beverage') == 1 if 'beverage' in data else False
-            data['bicycle'] = data.pop('bicycle') == 1 if 'bicycle' in data else False
-            data['campfire'] = data.pop('campfire') == 1 if 'campfire' in data else False
-            data['fitness'] = data.pop('fitness') == 1 if 'fitness' in data else False
-            data['karaoke'] = data.pop('karaoke') == 1 if 'karaoke' in data else False
-            data['public_bath'] = data.pop('publicbath') == 1 if 'publicbath' in data else False
-            data['public_pc'] = data.pop('publicpc') == 1 if 'publicpc' in data else False
-            data['sauna'] = data.pop('sauna') == 1 if 'sauna' in data else False
-            data['seminar'] = data.pop('seminar') == 1 if 'seminar' in data else False
-            data['sports'] = data.pop('sports') == 1 if 'sports' in data else False
+            data['benikia'] = data.pop('benikia', False) == 1
+            data['cooking'] = data.pop('chkcooking', False) == 1
+            data['goodstay'] = data.pop('goodstay', False) == 1
+            data['korean_house'] = data.pop('hanok', False) == 1
+            data['barbecue'] = data.pop('barbecue', False) == 1
+            data['beauty'] = data.pop('beauty', False) == 1
+            data['beverage'] = data.pop('beverage', False) == 1
+            data['bicycle'] = data.pop('bicycle', False) == 1
+            data['campfire'] = data.pop('campfire', False) == 1
+            data['fitness'] = data.pop('fitness', False) == 1
+            data['karaoke'] = data.pop('karaoke', False) == 1
+            data['public_bath'] = data.pop('publicbath', False) == 1
+            data['public_pc'] = data.pop('publicpc', False) == 1
+            data['sauna'] = data.pop('sauna', False) == 1
+            data['seminar'] = data.pop('seminar', False) == 1
+            data['sports'] = data.pop('sports', False) == 1
         elif content_type_id == 38:
             # 쇼핑
             keychain = {
@@ -341,10 +340,10 @@ class TourAPI:
             data = resp['response']['body']['items']['item']
             # Extract data list
             for img in data:
-                del img['contentid']
-                del img['serialnum']
-                img['origin'] = img.pop('originimgurl')
-                img['small'] = img.pop('smallimageurl')
+                img.pop('contentid', None)
+                img.pop('serialnum', None)
+                img['origin'] = img.pop('originimgurl', None)
+                img['small'] = img.pop('smallimageurl', None)
                 # Manufacture
 
             return data
