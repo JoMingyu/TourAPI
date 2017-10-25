@@ -92,8 +92,8 @@ class TourAPI:
         for tour in data:
             _dict_key_changer(tour, keychain)
 
-            tour['creation_date'] = str(tour.pop('createdtime'), None)[:8]
-            tour['modified_date'] = str(tour.pop('modifiedtime'), None)[:8]
+            tour['creation_date'] = str(tour.pop('createdtime'))[:8] if 'createdtime' in tour else None
+            tour['modified_date'] = str(tour.pop('modifiedtime'))[:8] if 'modifiedtime' in tour else None
 
             tour.pop('areacode', None)
             tour.pop('addr2', None)
@@ -339,14 +339,24 @@ class TourAPI:
         try:
             data = resp['response']['body']['items']['item']
             # Extract data list
-            for img in data:
-                img.pop('contentid', None)
-                img.pop('serialnum', None)
-                img['origin'] = img.pop('originimgurl', None)
-                img['small'] = img.pop('smallimageurl', None)
+            if type(data) is dict:
+                data.pop('contentid', None)
+                data.pop('serialnum', None)
+                data['origin'] = data.pop('originimgurl', None)
+                data['small'] = data.pop('smallimageurl', None)
                 # Manufacture
+            else:
+                for img in data:
+                    if type(img) is dict:
+                        img.pop('contentid', None)
+                        img.pop('serialnum', None)
+                        img['origin'] = img.pop('originimgurl', None)
+                        img['small'] = img.pop('smallimageurl', None)
+                        # Manufacture
+                    else:
+                        del img
 
-            return data
+            return data if type(data) is list else [data]
         except TypeError:
             return None
 
@@ -354,6 +364,6 @@ if __name__ == '__main__':
     api = TourAPI(AreaCodes.DAEJEON, 'bb%2FPPi9Iy9rNdmIN7PIdb4doQ8PCwL725OFZndZ7DS%2FbP8%2Bzr9T3rpoD%2B083JYDwg5YJyi3HQ3UZ5%2Fp0e6ER8Q%3D%3D')
     print(api.get_tour_list())
     for tour in api.get_tour_list():
-        print(api.get_detail_common(tour['content_id']))
-        print(api.get_detail_intro(tour['content_id']))
-        print(api.get_detail_images(tour['content_id']))
+        # print(api.get_detail_common(tour['content_id']))
+        # print(api.get_detail_intro(tour['content_id']))
+        api.get_detail_images(tour['content_id'])
